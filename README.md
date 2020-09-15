@@ -47,7 +47,7 @@ var config = {
 | `template`       | *Optional* Which template to use (only `strafe` is available) <br><br>**Type:** `string` <br>**Default:** strafe |
 | `showLogos`      | *Optional* whether the logos of the teams may be displayed <br><br>**Type:** `bool` <br>**Default:** true        |
 | `onlyTeam`      | *Optional* Only show team. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
-| `showEvent`      | *Optional* Only show Event. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
+| `onlyEvent`      | *Optional* Only show Event. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
 
 ## Built With
 

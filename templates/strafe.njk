@@ -21,7 +21,7 @@
                                     </div>
                                 </td>
                             {% else %}
-                                <td class="normal">{{ moment(match.date).format('HH:mm') }}</td>
+                                <td class="normal">{{ moment(match.date).format('DD-MMM HH:mm') }}</td>
                             {% endif %}
                             {% if match.stars > 0 %}
                                 <td class="stars">{{ '★'.repeat(match.stars) }}</td>

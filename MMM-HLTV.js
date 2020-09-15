@@ -14,6 +14,8 @@ Module.register('MMM-HLTV', {
         'preferWhite': false,
         'template': 'strafe',
         'showLogos': true,
+        'onlyTeam': '',
+        'onlyEvent': '',
     },
 
     // Interval
@@ -61,6 +63,7 @@ Module.register('MMM-HLTV', {
         return {
             en: 'translations/en.json',
             nl: 'translations/nl.json',
+            de: 'translations/de.json',
         };
     },
 
@@ -112,6 +115,13 @@ Module.register('MMM-HLTV', {
     socketNotificationReceived(notification, payload) {
         switch (notification) {
             case 'MATCHES_RECEIVED':
+                //let today = moment();
+                //let tommorow = moment("15-09-2020");
+                //console.log(tommorow);
+                //console.log(today.date());
+                //console.log(moment().format('DD-MMM HH:mm'));
+                //console.log(moment().diff(today));
+                //console.log(today.isSame(tommorow));
                 this.setMatches(payload);
                 break;
             case 'MATCH_ENDED':

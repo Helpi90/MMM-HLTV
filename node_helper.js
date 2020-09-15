@@ -83,6 +83,8 @@ module.exports = NodeHelper.create({
      * @return {void}
      */
     applyfilters () {
+        this.filterTeams();
+        this.filterEvents();
         this.filterStars();
         this.filterAmount();
     },
@@ -94,6 +96,62 @@ module.exports = NodeHelper.create({
      */
     filterAmount () {
         this.matches = this.matches.slice(0, this.config.amount);
+    },
+
+    /**
+     * Show only event from config
+     * 
+     * @return {void}
+     */
+    filterEvents () {
+        if (this.config.onlyEvent !== '') {
+            let filteredMatches = [];
+            let events = this.config.onlyEvent.split(",");
+            this.matches.forEach(match => {
+                if (match.event !== undefined) {
+                    events.forEach(event => {
+                        let eSplit = event.split(" ");
+                        let found = true;
+                        for (let i = 0; i < e.length; i++) {
+                            if (match.event.name.toLowerCase().includes(eSplit[i].toLowerCase())) {
+                                found = true;
+                            }
+                            else {
+                                found = false;
+                                break;
+                            }
+                        }
+                        if (found === true) {
+                            filteredMatches.push(match);
+                        }
+                    });
+                }
+            });
+            this.matches = filteredMatches;
+        }
+    },
+
+    /**
+     * Show only teams from config
+     * 
+     * @return {void}
+     */
+    filterTeams () {
+        if (this.config.onlyTeam !== '') {
+            let filteredMatches = [];
+            let teams = this.config.onlyTeam.split(",");
+            this.matches.forEach(match => {
+                if (match.team1 !== undefined) {
+                    teams.forEach(team => {
+                        if(match.team1.name.toLowerCase().includes(team.toLowerCase()) 
+                        || match.team2.name.toLowerCase().includes(team.toLowerCase())) {
+                            filteredMatches.push(match);
+                        }
+                    });
+                }
+            });
+            this.matches = filteredMatches;
+        }
     },
 
     /**

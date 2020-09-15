@@ -17,7 +17,7 @@
                                 <td>
                                     <div class="live bold bright">
                                         <span class="live__icon {{ 'live__icon--colored' if not config.preferWhite }}">⬤</span>
-                                        <span>{{ 'LIVE' | translate | upper }}</span>
+                                        <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}}</span>
                                     </div>
                                 </td>
                             {% else %}

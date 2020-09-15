@@ -10,6 +10,9 @@ module.exports = NodeHelper.create({
     // Matches
     matches: [],
 
+    // Results
+    results: [],
+
     // Monitored scorebots.
     scorebots: [],
 
@@ -21,13 +24,16 @@ module.exports = NodeHelper.create({
      * @return {void}
      */
     socketNotificationReceived(notification, payload) {
-
+        console.log(notification);
         switch(notification) {
             case 'CONFIG_SET':
                 this.config = payload;
                 break;
             case 'MATCHES_FETCH':
                 this.getMatchesAndNotify();
+                break;
+            case 'RESULTS_FETCH':
+                this.getResults();
                 break;
         }
 
@@ -40,9 +46,18 @@ module.exports = NodeHelper.create({
      */
     async getMatchesAndNotify() {
         this.matches = await HLTV.getMatches();
-        this.applyfilters();
+        this.applyfilters("matches");
         this.connectToScorebots();
         this.sendSocketNotification('MATCHES_RECEIVED', this.matches);
+    },
+
+    async getResults() {
+        this.results = await HLTV.getResults({pages: 2});
+        this.applyfilters("results");
+        this.connectToScorebots();
+        console.log("RESULTS");
+        console.log(this.results);
+        this.sendSocketNotification('RESULTS_RECEIVED', this.results);
     },
 
     /**
@@ -55,7 +70,7 @@ module.exports = NodeHelper.create({
             return match.live;
         }).forEach(match => {
             const id = match.id;
-
+            console.log(match);
             if(! _.includes(this.scorebots, id)) {
                 HLTV.connectToScorebot({
                     id,
@@ -82,11 +97,11 @@ module.exports = NodeHelper.create({
      * 
      * @return {void}
      */
-    applyfilters () {
-        this.filterTeams();
-        this.filterEvents();
-        this.filterStars();
-        this.filterAmount();
+    applyfilters (typ) {
+        this.filterTeams(typ);
+        this.filterEvents(typ);
+        this.filterStars(typ);
+        this.filterAmount(typ);
     },
 
     /**
@@ -94,8 +109,12 @@ module.exports = NodeHelper.create({
      * 
      * @return {void}
      */
-    filterAmount () {
-        this.matches = this.matches.slice(0, this.config.amount);
+    filterAmount (typ) {
+        if (typ === "matches") {
+            this.matches = this.matches.slice(0, this.config.amount);
+        } else if (typ === "results"){
+            this.results = this.results.slice(0, this.config.amount);
+        }
     },
 
     /**
@@ -105,9 +124,17 @@ module.exports = NodeHelper.create({
      */
     filterEvents () {
         if (this.config.onlyEvent !== '') {
-            let filteredMatches = [];
+            let filteredList = [];
             let events = this.config.onlyEvent.split(",");
-            this.matches.forEach(match => {
+            let list = null;
+            if (typ === "matches") {
+                list = this.matches;
+            }else if(typ === "results") {
+                list = this.results;
+            }else {
+                return;
+            }
+            list.forEach(match => {
                 if (match.event !== undefined) {
                     events.forEach(event => {
                         let eSplit = event.split(" ");
@@ -122,12 +149,16 @@ module.exports = NodeHelper.create({
                             }
                         }
                         if (found === true) {
-                            filteredMatches.push(match);
+                            filteredList.push(match);
                         }
                     });
                 }
             });
-            this.matches = filteredMatches;
+            if (typ === "matches") {
+                this.matches = filteredList;
+            }else if(typ === "results") {
+                this.results = filteredList
+            }
         }
     },
 
@@ -136,21 +167,33 @@ module.exports = NodeHelper.create({
      * 
      * @return {void}
      */
-    filterTeams () {
+    filterTeams (typ) {
         if (this.config.onlyTeam !== '') {
-            let filteredMatches = [];
+            let filteredList = [];
             let teams = this.config.onlyTeam.split(",");
-            this.matches.forEach(match => {
+            let list = null;
+            if (typ === "matches") {
+                list = this.matches;
+            }else if(typ === "results") {
+                list = this.results;
+            }else {
+                return;
+            }
+            list.forEach(match => {
                 if (match.team1 !== undefined) {
                     teams.forEach(team => {
                         if(match.team1.name.toLowerCase().includes(team.toLowerCase()) 
                         || match.team2.name.toLowerCase().includes(team.toLowerCase())) {
-                            filteredMatches.push(match);
+                            filteredList.push(match);
                         }
                     });
                 }
             });
-            this.matches = filteredMatches;
+            if (typ === "matches") {
+                this.matches = filteredList;
+            }else if(typ === "results") {
+                this.results = filteredList
+            }
         }
     },
 
@@ -159,9 +202,15 @@ module.exports = NodeHelper.create({
      * 
      * @return {void}
      */
-    filterStars () {
-        this.matches = this.matches.filter(match => {
-            return match.stars >= this.config.stars;
-        });
+    filterStars (typ) {
+        if (typ === "matches") {
+            this.matches = this.matches.filter(match => {
+                return match.stars >= this.config.stars;
+            });
+        } else if(typ === "results") {
+            this.results = this.results.filter(match => {
+                return match.stars >= this.config.stars;
+            });
+        }
     }
 });

@@ -16,6 +16,7 @@ To install the module, use your terminal to:
 2. Copy the module to your computer by executing the following command: `git clone https://github.com/maartenpaauw/MMM-HLTV.git`.
 3. Navigate to the MMM-HLTV module directory with `cd MMM-HLTV`.
 4. Execute `yarn install` to install the node dependencies.
+5. Install hltv with `npm i hltv`
 
 ## Using the module
 
@@ -27,7 +28,8 @@ var config = {
             module: 'MMM-HLTV',
             header: "Counter-Strike: Global Offensive",
             config: {
-                // See below for configurable options
+                'onlyTeam': 'Sprout',
+                'onlyEvent': '',
             },
         },
     ],

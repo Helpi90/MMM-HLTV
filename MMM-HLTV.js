@@ -71,7 +71,7 @@ Module.register('MMM-HLTV', {
      * Get the Nunjucks template.
      */
     getTemplate() {
-        return `templates/${this.config.template}.njk`;
+        return `templates/matches.njk`;
     },
 
     /**
@@ -115,13 +115,6 @@ Module.register('MMM-HLTV', {
     socketNotificationReceived(notification, payload) {
         switch (notification) {
             case 'MATCHES_RECEIVED':
-                //let today = moment();
-                //let tommorow = moment("15-09-2020");
-                //console.log(tommorow);
-                //console.log(today.date());
-                //console.log(moment().format('DD-MMM HH:mm'));
-                //console.log(moment().diff(today));
-                //console.log(today.isSame(tommorow));
                 this.setMatches(payload);
                 break;
             case 'MATCH_ENDED':

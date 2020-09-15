@@ -24,7 +24,6 @@ module.exports = NodeHelper.create({
      * @return {void}
      */
     socketNotificationReceived(notification, payload) {
-        console.log(notification);
         switch(notification) {
             case 'CONFIG_SET':
                 this.config = payload;
@@ -55,8 +54,6 @@ module.exports = NodeHelper.create({
         this.results = await HLTV.getResults({pages: 2});
         this.applyfilters("results");
         this.connectToScorebots();
-        console.log("RESULTS");
-        console.log(this.results);
         this.sendSocketNotification('RESULTS_RECEIVED', this.results);
     },
 
@@ -70,7 +67,6 @@ module.exports = NodeHelper.create({
             return match.live;
         }).forEach(match => {
             const id = match.id;
-            console.log(match);
             if(! _.includes(this.scorebots, id)) {
                 HLTV.connectToScorebot({
                     id,
@@ -122,7 +118,7 @@ module.exports = NodeHelper.create({
      * 
      * @return {void}
      */
-    filterEvents () {
+    filterEvents (typ) {
         if (this.config.onlyEvent !== '') {
             let filteredList = [];
             let events = this.config.onlyEvent.split(",");
@@ -139,7 +135,7 @@ module.exports = NodeHelper.create({
                     events.forEach(event => {
                         let eSplit = event.split(" ");
                         let found = true;
-                        for (let i = 0; i < e.length; i++) {
+                        for (let i = 0; i < eSplit.length; i++) {
                             if (match.event.name.toLowerCase().includes(eSplit[i].toLowerCase())) {
                                 found = true;
                             }

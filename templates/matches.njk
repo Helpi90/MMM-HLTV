@@ -17,7 +17,11 @@
                                 <td>
                                     <div class="live bold bright">
                                         <span class="live__icon {{ 'live__icon--colored' if not config.preferWhite }}">⬤</span>
-                                        <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}}</span>
+                                        {% if scoreboard.bombPlanted %}
+                                            <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}} Map:{{scoreboard.mapName | upper }}</span>
+                                        {% else %}
+                                            <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}} Map:{{scoreboard.mapName | upper }}</span>
+                                        {% endif %}
                                     </div>
                                 </td>
                             {% else %}
@@ -37,9 +41,9 @@
                                 <td class="small bold bright">{{ team.name }}</td>
                                 {% if match.live %}
                                     <td class="score small bold bright">
-                                        {% if is('T', team, scoreboard) %}
+                                        {% if team.name == scoreboard.terroristTeamName %}
                                             {{ scoreboard.tTeamScore }}
-                                        {% elif is('CT', team, scoreboard) %}
+                                        {% elif team.name == scoreboard.ctTeamName %}
                                             {{ scoreboard.ctTeamScore }}
                                         {% else %}
                                             &ndash;

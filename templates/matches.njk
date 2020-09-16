@@ -19,6 +19,7 @@
                                         <span class="live__icon {{ 'live__icon--colored' if not config.preferWhite }}">⬤</span>
                                         {% if scoreboard.bombPlanted %}
                                             <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}} Map:{{scoreboard.mapName | upper }}</span>
+                                            <span><img class="logo__img" src="https://static.hltv.org/images/scoreboard2/bomb_exploded.png" /></span>
                                         {% else %}
                                             <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}} Map:{{scoreboard.mapName | upper }}</span>
                                         {% endif %}

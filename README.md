@@ -1,8 +1,8 @@
 # MMM-HLTV
 
-> MagicMirror² module which will show CS:GO matches provided by HLTV
+This is a maintained fork from [maartenpaauw](https://github.com/maartenpaauw/MMM-HLTV.gi)
 
-<a href="https://www.buymeacoffee.com/maartenpaauw" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+> MagicMirror² module which will show CS:GO matches provided by HLTV
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/) which displays the current and upcoming Counter-Strike: Global Offensive matches.
 
@@ -13,10 +13,9 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 To install the module, use your terminal to:
 
 1. Navigate to your MagicMirror's modules folder. If you are using the default installation directory, use the command: `cd ~/MagicMirror/modules`.
-2. Copy the module to your computer by executing the following command: `git clone https://github.com/maartenpaauw/MMM-HLTV.git`.
+2. Copy the module to your computer by executing the following command: `git clone https://github.com/helpi90/MMM-HLTV.git`.
 3. Navigate to the MMM-HLTV module directory with `cd MMM-HLTV`.
-4. Execute `yarn install` to install the node dependencies.
-5. Install hltv with `npm i hltv`
+4. Install hltv with `npm i hltv && npm install`
 
 ## Using the module
 
@@ -30,6 +29,7 @@ var config = {
             config: {
                 'onlyTeam': '',
                 'onlyEvent': '',
+                'switchView': false,
             },
         },
     ],
@@ -44,10 +44,10 @@ var config = {
 | `amount`         | *Optional* The amount of matches to show <br><br>**Type:** `int` <br>**Default:** 5                              |
 | `stars`          | *Optional* The minimum number of stars a match must have <br><br>**Type:** `int` <br>**Default:** 0              |
 | `preferWhite`    | *Optional* Whether the module may use colors <br><br>**Type:** `bool` <br>**Default:** false                     |
-| `template`       | *Optional* Which template to use (only `strafe` is available) <br><br>**Type:** `string` <br>**Default:** strafe |
 | `showLogos`      | *Optional* whether the logos of the teams may be displayed <br><br>**Type:** `bool` <br>**Default:** true        |
 | `onlyTeam`      | *Optional* Only show team. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
 | `onlyEvent`      | *Optional* Only show Event. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
+| `switchView`     | *Optional* rotate view (matches/results) <br><br>**Type:** `bool` <br>**Default:** false        |
 
 ## Built With
 
@@ -55,7 +55,7 @@ var config = {
 
 ## Authors
 
-- **Maarten Paauw** - *Initial work* - [maartenpaauw](https://github.com/maartenpaauw)
+- **Helpi** - *Initial work* - [Helpi90](https://github.com/helpi90)
 
 ## License
 

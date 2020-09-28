@@ -3,6 +3,9 @@ Module.register('MMM-HLTV', {
     // All matches.
     matches: [],
 
+    // All results.
+    results: [],
+
     // Scorebots
     scorebots: {},
 
@@ -29,6 +32,7 @@ Module.register('MMM-HLTV', {
     start() {
         this.sendSocketNotification('CONFIG_SET', this.config);
         this.sendSocketNotification('MATCHES_FETCH');
+        this.sendSocketNotification('RESULTS_FETCH');
         this.scheduleFetch();
     },
 
@@ -123,6 +127,9 @@ Module.register('MMM-HLTV', {
             case 'MATCH_UPDATE':
                 this.updateScoreboard(payload);
                 break;
+            case 'RESULTS_RECEIVED':
+                this.setResults(payload);
+                break;
         };
     },
 
@@ -145,6 +152,19 @@ Module.register('MMM-HLTV', {
      */
     setMatches(matches) {
         this.matches = matches;
+        this.updateDom(500);
+    },
+
+    /**
+     * Set the results.
+     * 
+     * @param  {Array} matches All current results from HLTV
+     * @return {void}
+     */
+    setResults(results) {
+        this.results = results;
+        console.log("RESULTS");
+        console.log(this.results);
         this.updateDom(500);
     },
 

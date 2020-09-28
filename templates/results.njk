@@ -1,12 +1,12 @@
 <table class="xsmall light dimmed">
-    {% if matches.length === 0 %}
+    {% if results.length === 0 %}
         <tr>
             <td>{{ 'NO_MATCHES_FOUND' | translate }}</td>
         </tr>
     {% else %}
         <tr>
             <td>
-                {% for match in matches %}
+                {% for match in results %}
                     {% set scoreboard = scorebots[match.id] %}
                     <table class="match">
                         <tr>

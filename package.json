@@ -6,7 +6,7 @@
   "author": "maartenpaauw <maartenpaauw@gmail.com>",
   "license": "GPL-3.0",
   "dependencies": {
-    "hltv": "2.20.3",
+    "hltv": "^2.20.5",
     "lodash": "4.17.19"
   }
 }

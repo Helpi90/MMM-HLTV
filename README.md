@@ -1,6 +1,6 @@
 # MMM-HLTV
 
-This is a maintained fork from [maartenpaauw](https://github.com/maartenpaauw/MMM-HLTV.gi)
+This is a maintained fork from [maartenpaauw](https://github.com/maartenpaauw/MMM-HLTV.git)
 
 > MagicMirror² module which will show CS:GO matches provided by HLTV
 

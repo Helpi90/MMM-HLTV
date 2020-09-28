@@ -142,9 +142,6 @@ Module.register('MMM-HLTV', {
      */
     scheduleFetch() {
         this.interval = setInterval(() => {
-            //this.sendSocketNotification('MATCHES_FETCH');
-            console.log("VIEW=" + this.viewMatch);
-            console.log("LIVE=" + this.isLive);
             this.viewMatch = !this.viewMatch;
             if (this.viewMatch || !this.config.switchView || this.isLive) {
                 this.sendSocketNotification('MATCHES_FETCH')
@@ -184,6 +181,8 @@ Module.register('MMM-HLTV', {
         this.isLive = true;
         const exists = update.id in this.scorebots;
         this.scorebots[update.id] = update.scoreboard;
+        let map = this.scorebots[update.id]["mapName"].split("_")[1];
+        this.scorebots[update.id]["mapName"] = map;
         if(! exists) this.updateDom(500);
     },
 

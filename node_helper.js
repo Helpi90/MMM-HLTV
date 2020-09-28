@@ -98,6 +98,18 @@ module.exports = NodeHelper.create({
         this.filterEvents(typ);
         this.filterStars(typ);
         this.filterAmount(typ);
+        if (typ === "results") {
+            this.filterResult();
+        }
+    },
+
+    filterResult () {
+        for (let i = 0; i < this.results.length; i++) {
+            const el = this.results[i];
+            let result = el.result.split("-");
+            el.team1["result"] = result[0];
+            el.team2["result"] = result[1];
+        }
     },
 
     /**

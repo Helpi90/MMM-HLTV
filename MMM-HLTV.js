@@ -9,16 +9,22 @@ Module.register('MMM-HLTV', {
     // Scorebots
     scorebots: {},
 
+    // Switch view
+    viewMatch: null,
+
+    // Live status
+    isLive: false,
+
     // Module config defaults.
     defaults: {
         'updateInterval': 60 * 1000,
         'amount': 5,
         'stars': 0,
         'preferWhite': false,
-        'template': 'strafe',
         'showLogos': true,
         'onlyTeam': '',
         'onlyEvent': '',
+        'switchView': false
     },
 
     // Interval
@@ -33,6 +39,7 @@ Module.register('MMM-HLTV', {
         this.sendSocketNotification('CONFIG_SET', this.config);
         this.sendSocketNotification('MATCHES_FETCH');
         this.sendSocketNotification('RESULTS_FETCH');
+        this.viewMatch = true;
         this.scheduleFetch();
     },
 
@@ -75,7 +82,15 @@ Module.register('MMM-HLTV', {
      * Get the Nunjucks template.
      */
     getTemplate() {
-        return `templates/matches.njk`;
+        if (this.config.switchView && !this.isLive) {
+            if (this.viewMatch) {
+                return `templates/matches.njk`;
+            } else {
+                return `templates/results.njk`;
+            }  
+        }else {
+            return `templates/matches.njk`;
+        }
     },
 
     /**
@@ -85,6 +100,7 @@ Module.register('MMM-HLTV', {
         return {
             config: this.config,
             matches: this.matches,
+            results: this.results,
             scorebots: this.scorebots,
             moment,
 
@@ -93,20 +109,6 @@ Module.register('MMM-HLTV', {
                 return typeof scoreboard !== 'undefined' && team.id === scoreboard[key];
             }
         };
-    },
-
-    /**
-     * This method is called when a module is hidden.
-     */
-    suspend() {
-        clearInterval(this.interval);
-    },
-
-    /**
-     * This method is called when a module is shown.
-     */
-    resume() {
-        this.scheduleFetch();
     },
 
     /**
@@ -140,7 +142,15 @@ Module.register('MMM-HLTV', {
      */
     scheduleFetch() {
         this.interval = setInterval(() => {
-            this.sendSocketNotification('MATCHES_FETCH');
+            //this.sendSocketNotification('MATCHES_FETCH');
+            console.log("VIEW=" + this.viewMatch);
+            console.log("LIVE=" + this.isLive);
+            this.viewMatch = !this.viewMatch;
+            if (this.viewMatch || !this.config.switchView || this.isLive) {
+                this.sendSocketNotification('MATCHES_FETCH')
+            } else {
+                this.sendSocketNotification('RESULTS_FETCH')
+            }
         }, this.config.updateInterval);
     },
 
@@ -163,8 +173,6 @@ Module.register('MMM-HLTV', {
      */
     setResults(results) {
         this.results = results;
-        console.log("RESULTS");
-        console.log(this.results);
         this.updateDom(500);
     },
 
@@ -173,6 +181,7 @@ Module.register('MMM-HLTV', {
      * @param {object} update scoreboard update.
      */
      updateScoreboard(update) {
+        this.isLive = true;
         const exists = update.id in this.scorebots;
         this.scorebots[update.id] = update.scoreboard;
         if(! exists) this.updateDom(500);
@@ -183,6 +192,7 @@ Module.register('MMM-HLTV', {
      * @param {int} id match id to remove from object.
      */
     removeFromScoreboards(id) {
+        this.isLive = false;
         delete this.scorebots[id];
     },
 });

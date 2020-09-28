@@ -7,7 +7,6 @@
         <tr>
             <td>
                 {% for match in results %}
-                    {% set scoreboard = scorebots[match.id] %}
                     <table class="match">
                         <tr>
                             {% if config.showLogos %}

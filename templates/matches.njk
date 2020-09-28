@@ -17,7 +17,7 @@
                                 <td>
                                     <div class="live bold bright">
                                         <span class="live__icon {{ 'live__icon--colored' if not config.preferWhite }}">⬤</span>
-                                        {% if scoreboard.bombPlanted %}
+                                        {% if scoreboard.bombPlanted and config.showLogos %}
                                             <span>{{ 'LIVE' | translate | upper }}, {{ match.format | upper}} Map:{{scoreboard.mapName | upper }}</span>
                                             <span><img class="logo__img" src="https://static.hltv.org/images/scoreboard2/bomb_exploded.png" /></span>
                                         {% else %}

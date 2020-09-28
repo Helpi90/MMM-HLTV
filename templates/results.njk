@@ -11,17 +11,10 @@
                     <table class="match">
                         <tr>
                             {% if config.showLogos %}
-                                <td>&nbsp;</td>
+                                <td><span><img class="logo__img" src="https://static.hltv.org/images/eventLogos/{{match.event.id}}.png" /></span><td>{{ match.event.name }}</td></td>
+                            {% else %}
+                                <td>{{ match.event.name }}</td>
                             {% endif %}
-                            {% if match.stars > 0 %}
-                                <td class="stars">{{ '★'.repeat(match.stars) }}</td>
-                            {% endif %}
-                        </tr>
-                        <tr>
-                            {% if config.showLogos %}
-                                <td>&nbsp;</td>
-                            {% endif %}
-                            <td>{{ match.event.name }}</td>
                         </tr>
                         {% for team in [match.team1, match.team2] %}
                             <tr>

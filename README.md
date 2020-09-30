@@ -51,7 +51,7 @@ var config = {
 | `showLogos`      | *Optional* whether the logos of the teams may be displayed <br><br>**Type:** `bool` <br>**Default:** true        |
 | `onlyTeam`      | *Optional* Only show team. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
 | `onlyEvent`      | *Optional* Only show Event. Supports multiple strings, separated by comma (",")<br><br>**Type:** `string` <br>**Default:** ' '        |
-| `switchView`     | *Optional* rotate view (matches/results) <br><br>**Type:** `bool` <br>**Default:** false        |
+| `switchView`     | *Optional* rotate view (matches/results). Is a match live, it will only show matches <br><br>**Type:** `bool` <br>**Default:** false        |
 
 ## Built With
 

@@ -163,6 +163,9 @@ Module.register('MMM-HLTV', {
         this.updateDom(500);
     },
 
+    /**
+     * Check live status
+     */
     checkLiveStatus() {
         this.isLive = false;
         for (let i = 0; i < this.matches.length; i++) {

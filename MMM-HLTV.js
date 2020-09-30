@@ -165,6 +165,8 @@ Module.register('MMM-HLTV', {
 
     /**
      * Check live status
+     * 
+     * @return {void}
      */
     checkLiveStatus() {
         this.isLive = false;

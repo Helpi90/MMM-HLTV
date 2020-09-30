@@ -159,7 +159,17 @@ Module.register('MMM-HLTV', {
      */
     setMatches(matches) {
         this.matches = matches;
+        this.checkLiveStatus();
         this.updateDom(500);
+    },
+
+    checkLiveStatus() {
+        this.isLive = false;
+        for (let i = 0; i < this.matches.length; i++) {
+            if (this.matches[i].live) {
+                this.isLive = true
+            }
+        }
     },
 
     /**
@@ -178,7 +188,6 @@ Module.register('MMM-HLTV', {
      * @param {object} update scoreboard update.
      */
      updateScoreboard(update) {
-        this.isLive = true;
         const exists = update.id in this.scorebots;
         this.scorebots[update.id] = update.scoreboard;
         let map = this.scorebots[update.id]["mapName"].split("_")[1];
@@ -191,7 +200,6 @@ Module.register('MMM-HLTV', {
      * @param {int} id match id to remove from object.
      */
     removeFromScoreboards(id) {
-        this.isLive = false;
         delete this.scorebots[id];
     },
 });

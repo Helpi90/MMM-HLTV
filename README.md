@@ -6,7 +6,11 @@ This is a maintained fork from [maartenpaauw](https://github.com/maartenpaauw/MM
 
 This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/) which displays the current and upcoming Counter-Strike: Global Offensive matches.
 
-![MMM-HLTV Screenshot](docs/strafe.png)
+## View scoreboard and result
+<p float="left">
+  <img src="docs/scoreboard.png" width="40%" />
+  <img src="docs/result.png" width="45%" /> 
+</p>
 
 ## Installation
 
